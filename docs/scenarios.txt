@@ -5,27 +5,27 @@ JPacman Scenarios
 
 1. Background
 
-This document describes a series of JPacman user scenarios, 
-following the format of behavior-driven development 
-(see http://dannorth.net/whats-in-a-story/). 
+This document describes a series of JPacman user scenarios,
+following the format of behavior-driven development
+(see http://dannorth.net/whats-in-a-story/).
 Thus, each scenario is of the form:
 
 Title (one line describing the story)
- 
+
 Narrative:
 As a    [role]
 I want  [feature]
 So that [benefit]
- 
+
 Acceptance Criteria: (presented as Scenarios)
- 
+
 Scenario 1: Title
 Given [context]
   And [some more context]...
 When  [event]
 Then  [outcome]
   And [another outcome]...
- 
+
 Scenario 2: ...
 
 
@@ -67,7 +67,7 @@ Then  the game should start.
 
 
 STORY 2 -- MOVE THE PLAYER:
-As a player, 
+As a player,
  I want to move my Pacman arround on the board;
 So that I can eat all food and win the game.
 
@@ -91,7 +91,7 @@ Given the game has started,
 When  I press an arrow key towards that cell;
 Then  my Pacman dies,
   and the game is over.
-  
+
 Scenario S2.4: The move fails
 Given the game has started,
   and my Pacman is next to a cell containing a wall;
