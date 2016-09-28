@@ -27,3 +27,20 @@ Given the game has started,
  and my pacman is just failed to move towards a cell containing a wall;
 When the player clicks the "Undo" button;
 Then my pacman stays wherever it is.
+
+As a ghost,
+ I get automatically undone
+So that it would be a fair game
+
+Scenario 7.5:
+Given the game has started,
+  and a ghost is on a food cell;
+When  the player clicks the "Undo" button,
+Then  the ghost move back to the previous cell,
+  and the food cell is visible again.
+
+Scenario 7.6:
+Given the game has started,
+  and a ghost is on an empty cell;
+When  the player clicks the "Undo" button,
+Then  the ghost move back to the previous cell.
