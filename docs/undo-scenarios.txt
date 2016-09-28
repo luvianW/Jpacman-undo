@@ -1,0 +1,17 @@
+Story 7 - Undo
+As a player,
+ I want to undo my move;
+So that I can return to the previous step of my movement.
+
+Scenario 7.1:
+Given the game has started,
+ and my pacman just move a empty cell;
+When the player clicks the "Undo" button;
+Then my pacman move to the previous cell.
+
+Scenario 7.2:
+Given the game has started,
+ and my pacman just move a cell containing food;
+When the player clicks the "Undo" button;
+Then my pacman move to the previous cell
+and the food appear again on this cell, and I lose a point.
