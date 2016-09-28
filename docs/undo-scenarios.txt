@@ -15,3 +15,15 @@ Given the game has started,
 When the player clicks the "Undo" button;
 Then my pacman move to the previous cell
 and the food appear again on this cell, and I lose a point.
+
+Scenario 7.3:
+Given the game has started,
+ and my pacman is eaten by a ghost and game is terminated,
+When the player clicks the "Undo" button;
+Then the game restarts and my pacman returns to the cell before it dies.
+
+Scenario 7.4
+Given the game has started,
+ and my pacman is just failed to move towards a cell containing a wall;
+When the player clicks the "Undo" button;
+Then my pacman stays wherever it is.
