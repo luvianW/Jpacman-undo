@@ -17,12 +17,12 @@
       <dependency>
           <groupId>nl.tudelft.jpacman</groupId>
           <artifactId>jpacman-framework</artifactId>
-          <version>5.3.1-SNAPSHOT</version>
+          <version>5.5</version>
       </dependency>
       <dependency>
           <groupId>nl.tudelft.jpacman</groupId>
           <artifactId>jpacman-framework</artifactId>
-          <version>5.3.1-SNAPSHOT</version>
+          <version>5.5</version>
           <type>test-jar</type>
       </dependency>
 
@@ -163,6 +163,41 @@
 								</rulesets>
 							</configuration>
 						</plugin>
+						<developers>
+      <developer>
+        <id>luvianW</id>
+        <name>Luvian Wang</name>
+        <email>luvian@hotmail.ca</email>
+        <url>http://www.github.com/luvianW</url>
+        <roles>
+          <role>developer</role>
+        </roles>
+      </developer>
+    </developers>
+    
+    <developers>
+      <developer>
+        <id>joshuaqiao28</id>
+        <name>Yufei Qiao</name>
+        <email>joshuaqiao28@gmail.com</email>
+        <url>http://www.github.com/joshuaqiao28</url>
+        <roles>
+          <role>developer</role>
+        </roles>
+      </developer>
+    </developers>
+    
+    <developers>
+      <developer>
+        <id>chuaxi</id>
+        <name>Xi Chu</name>
+        <email>chuxitina@hotmail.com</email>
+        <url>http://www.github.com/chuaxi</url>
+        <roles>
+          <role>developer</role>
+        </roles>
+      </developer>
+    </developers>
 					</reportPlugins>
 				</configuration>
 			</plugin>
