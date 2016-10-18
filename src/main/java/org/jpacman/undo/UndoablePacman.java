@@ -1,1 +1,14 @@
-This file is simply to get the git repo set up correctly. Can be deleted when you put real code here.
+package org.jpacman.undo;
+
+import org.jpacman.framework.ui.MainUI;
+import org.jpacman.framework.factory.FactoryException;
+import org.jpacman.framework.ui.ButtonPanel;
+import org.jpacman.framework.ui.PacmanInteraction;
+
+public class UndoablePacman extends MainUI{
+
+  public void undo() {
+  
+  }
+  
+}
