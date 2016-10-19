@@ -1,5 +1,6 @@
 package org.jpacman.undo;
+import org.jpacman.framework.model.*;
 
-class UndoableGame {
+class UndoableGame extends Game {
 
 }
