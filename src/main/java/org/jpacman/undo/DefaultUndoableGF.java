@@ -1,20 +1,23 @@
 package org.jpacman.undo;
-import org.jpacman.framework.factory.*;
+
+import org.jpacman.framework.factory.DefaultGameFactory;
 import org.jpacman.framework.model.Game;
 
 public class DefaultUndoableGF extends DefaultGameFactory {
-	
-	private transient UndoableGame theUndoableGame;
+
+	private transient UndoableGame theGame;
 
 	@Override
-	public Game makeGame(){
-		theUndoableGame = new UndoableGame();
-		return theUndoableGame;
+	public Game makeGame() {
+
+		theGame = new UndoableGame();
+		return theGame;
 	}
-	
+
 	@Override
-	protected Game getGame(){
-		assert theUndoableGame != null;
-		return theUndoableGame;
+	public Game getGame() {
+
+		assert theGame != null;
+		return theGame;
 	}
 }
