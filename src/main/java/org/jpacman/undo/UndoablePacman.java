@@ -12,8 +12,8 @@ public class UndoablePacman extends MainUI {
 
 	private transient undoPacInteraction undoPI;
 
-	private UndoButton UndoableButtonPanel;
-	private DefaultUndoableGF fact;
+	private UndoButton UndoableButtonPanel = new UndoButton();
+	private DefaultUndoableGF fact = new DefaultUndoableGF();
 
 	public UndoablePacman() {
 		level = new Level();
