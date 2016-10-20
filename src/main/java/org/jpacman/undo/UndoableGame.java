@@ -17,28 +17,34 @@ public class UndoableGame extends Game {
 	Deque<undoStack> States = new ArrayDeque<undoStack>();
 
 	public void undo() {
-		undoStack preState = States.pop();
-		int prePoint = preState.getPoints();
-		Tile prePlayerTile = preState.getPlayerLocation();
-		List<Tile> ghostTile = new ArrayList<Tile>();
-		for (Tile ghost : preState.getGhostLocation()) {
-			ghostTile.add(ghost);
-		}
+		if (States.size() >= 1) {
+			undoStack preState = States.pop();
+			int prePoint = preState.getPoints();
+			Tile prePlayerTile = preState.getPlayerLocation();
+			List<Tile> ghostTile = new ArrayList<Tile>();
+			for (Tile ghost : preState.getGhostLocation()) {
+				ghostTile.add(ghost);
+			}
 
-		Player player = this.getPlayer();
-		if (player.getPoints() > prePoint) {
-			Food food = new Food();
-			food.occupy(player.getTile());
-			this.getPointManager().consumePointsOnBoard(player, player.getPoints() - prePoint);
-		}
+			Player player = this.getPlayer();
+			if (player.getPoints() > prePoint) {
+				Food food = new Food();
+				food.occupy(player.getTile());
+				this.getPointManager().consumePointsOnBoard(player,
+				        player.getPoints() - prePoint);
+			}
 
-		player.deoccupy();
-		player.occupy(prePlayerTile);
+			player.deoccupy();
+			player.occupy(prePlayerTile);
 
-		for (Ghost ghost : this.getGhosts()) {
-			ghost.deoccupy();
-			ghost.occupy(ghostTile.remove(0));
+			for (Ghost ghost : this.getGhosts()) {
+				ghost.deoccupy();
+				ghost.occupy(ghostTile.remove(0));
 
+			}
+			if (!player.isAlive()) {
+				player.resurrect();
+			}
 		}
 	}
 
