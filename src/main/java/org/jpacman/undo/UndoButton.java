@@ -43,12 +43,16 @@ public class UndoButton extends ButtonPanel {
 	}
 
 	protected void initializeUndoButton() {
-		undoButton.setEnabled(false);
+
+		undoButton.setEnabled(true);
 		undoButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getPacmanInteractor().undo();
+
+				// pause();
+				start();
 			}
 		});
 		undoButton.setName("jpacman.undo");

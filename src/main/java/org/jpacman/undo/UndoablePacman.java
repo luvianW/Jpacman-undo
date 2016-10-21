@@ -10,12 +10,13 @@ public class UndoablePacman extends MainUI {
 
 	private final Level level;
 
-	private transient undoPacInteraction undoPI;
+	private transient undoPacInteraction undoPI = new undoPacInteraction();
 
 	private UndoButton UndoableButtonPanel = new UndoButton();
 	private DefaultUndoableGF fact = new DefaultUndoableGF();
 
 	public UndoablePacman() {
+		super();
 		level = new Level();
 	}
 
@@ -24,8 +25,9 @@ public class UndoablePacman extends MainUI {
 
 		this.withModelInteractor(undoPI);
 
-		// UndoableButtonPanel.withInteractor(undoPI);
+		UndoableButtonPanel.withInteractor(undoPI);
 		this.withButtonPanel(UndoableButtonPanel);
+
 	}
 
 	@Override

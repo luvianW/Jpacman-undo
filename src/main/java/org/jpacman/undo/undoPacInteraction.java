@@ -8,7 +8,9 @@ public class undoPacInteraction extends PacmanInteraction {
 
 	public void undo() {
 		undoableInteractor.undo();
+		// ((UndoableGame) this.getGame()).undo();
 		updateState();
+
 	}
 
 }
