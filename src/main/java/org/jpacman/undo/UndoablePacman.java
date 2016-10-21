@@ -25,7 +25,7 @@ public class UndoablePacman extends MainUI {
 
 		this.withModelInteractor(undoPI);
 
-		// UndoableButtonPanel.withInteractor(undoPI);
+		UndoableButtonPanel.withInteractor(undoPI);
 		this.withButtonPanel(UndoableButtonPanel);
 
 	}

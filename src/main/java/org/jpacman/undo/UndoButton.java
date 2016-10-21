@@ -28,7 +28,6 @@ public class UndoButton extends ButtonPanel {
 		// startButton = new JButton("Start");
 		// stopButton = new JButton("Stop");
 		undoButton = new JButton("Undo");
-
 		// initializeStartButton();
 		// initializeStopButton();
 		initializeUndoButton();
@@ -43,12 +42,14 @@ public class UndoButton extends ButtonPanel {
 	}
 
 	protected void initializeUndoButton() {
-		undoButton.setEnabled(false);
+		undoButton.setEnabled(true);
 		undoButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getPacmanInteractor().undo();
+				// if (getPacmanInteractor().getCurrentState() == MatchState.PLAYING)
+				// undoButton.setEnabled(true);
 			}
 		});
 		undoButton.setName("jpacman.undo");
