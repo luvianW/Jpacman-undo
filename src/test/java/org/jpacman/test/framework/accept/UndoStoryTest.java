@@ -3,20 +3,22 @@ package org.jpacman.test.framework.accept;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.jpacman.framework.model.Player;
 import org.jpacman.framework.model.Tile;
 import org.jpacman.framework.ui.MainUI;
 import org.jpacman.undo.UndoablePacman;
-import org.jpacman.undo.undoPacInteraction;
 import org.junit.Test;
 
 public class UndoStoryTest extends MovePlayerStoryTest {
 
 	UndoablePacman newUndoPac;
 
-	@Override
-	protected undoPacInteraction getEngine() {
-		return (undoPacInteraction) super.getEngine();
-	}
+	public Player p = new Player();
+
+	// @Override
+	// protected undoPacInteraction getEngine() {
+	// return (undoPacInteraction) super.getEngine();
+	// }
 
 	@Override
 	public MainUI makeUI() {
@@ -34,18 +36,21 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 	// return to the previous cell.
 	@Test
 	public void undo_scenarios_71_tests() {
-		Tile emptyTile = tileAt(1, 0);
+
 		// given
 		getEngine().start();
+
+		Tile playerTile = tileAt(1, 1);
+		assertEquals(playerTile, getPlayer().getTile());
 		// and
 
-		Tile pre_tile = getPlayer().getTile();
+		Tile pre_tile = p.getTile();
 		getEngine().up();
 
 		// when
 		newUndoPac.undo();
 
-		assertEquals(getPlayer().getTile(), pre_tile);
+		assertEquals(p.getTile(), pre_tile);
 
 	}
 
@@ -56,19 +61,28 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 	public void undo_scenarios_72_tests() {
 
 		// given
+
+		Tile playerTile = tileAt(1, 1);
+		// Tile aTile = tileAt(0, 0);
+		// Tile bTile = tileAt(1, 1);
+		// assertEquals(aTile, bTile);
+
+		// assertEquals(playerTile, getPlayer().getTile());
+
 		getEngine().start();
 
-		Tile pre_tile = getPlayer().getTile();
-		int pre_points = getPlayer().getPoints();
+		Tile pre_tile = p.getTile();
+		int pre_points = p.getPoints();
 
 		// and
 		getEngine().left();
+		Tile left_tile = tileAt(0, 1);
 
 		// when
 		newUndoPac.undo();
 
-		assertEquals(getPlayer().getTile(), pre_tile);
-		assertEquals(getPlayer().getPoints(), pre_points);
+		assertEquals(p.getTile(), pre_tile);
+		assertEquals(p.getPoints(), pre_points);
 
 	}
 
@@ -78,9 +92,13 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 	public void undo_scenarios_73_tests() {
 
 		// given
+
+		Tile playerTile = tileAt(1, 1);
+		// assertEquals(playerTile, getPlayer().getTile());
+
 		getEngine().start();
 
-		Tile pre_tile = getPlayer().getTile();
+		Tile pre_tile = p.getTile();
 		Tile pre_ghost = theGhost().getTile();
 
 		// and
@@ -89,8 +107,8 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 		// when
 		newUndoPac.undo();
 
-		assertTrue(getPlayer().isAlive());
-		assertEquals(getPlayer().getTile(), pre_tile);
+		assertTrue(p.isAlive());
+		assertEquals(p.getTile(), pre_tile);
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}
 
