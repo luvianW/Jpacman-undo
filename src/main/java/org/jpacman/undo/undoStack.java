@@ -8,12 +8,12 @@ import org.jpacman.framework.model.Tile;
 
 class undoStack {
 	// UndoableGame Game;
-	private Tile playerTile;
-	private int points;
+	Tile playerTile;
+	int points;
 	private List<Tile> ghostTile = new ArrayList<Tile>();
 
 	public undoStack() {
-		// playerTile = null;
+		playerTile = null;
 		points = 0;
 	}
 

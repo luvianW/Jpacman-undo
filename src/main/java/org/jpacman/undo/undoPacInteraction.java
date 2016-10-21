@@ -4,7 +4,7 @@ import org.jpacman.framework.ui.PacmanInteraction;
 
 public class undoPacInteraction extends PacmanInteraction {
 
-	private UndoableGame undoableInteractor = new UndoableGame();
+	private UndoableGame undoableInteractor;
 
 	public void undo() {
 		undoableInteractor.undo();

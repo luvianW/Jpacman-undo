@@ -14,7 +14,7 @@ import org.jpacman.framework.model.Tile;
 
 public class UndoableGame extends Game {
 
-	public Deque<undoStack> States = new ArrayDeque<undoStack>();
+	Deque<undoStack> States = new ArrayDeque<undoStack>();
 
 	public void undo() {
 		if (States.size() >= 1) {
@@ -51,17 +51,15 @@ public class UndoableGame extends Game {
 	@Override
 	public void moveGhost(Ghost theGhost, Direction dir) {
 		// push stack
+		undoStack currentState = new undoStack();
+		currentState.pushStack(this);
+		States.push(currentState);
 		super.moveGhost(theGhost, dir);
-		notifyViewers();
 	}
 
 	@Override
 	public void movePlayer(Direction dir) {
-		undoStack currentState = new undoStack();
-		currentState.pushStack(this);
-		States.push(currentState);
 		super.movePlayer(dir);
-		notifyViewers();
 	}
 
 }
