@@ -14,11 +14,21 @@ import org.jpacman.framework.model.Tile;
 
 public class UndoableGame extends Game {
 
-	public Deque<undoStack> States = new ArrayDeque<undoStack>();
+	public static Deque<undoStack> States = new ArrayDeque<undoStack>();
+
+	public static int cur_point = 0;
+
+	public static Player player = new Player();
+
+	public static UndoableGame game = new UndoableGame();
 
 	public void undo() {
+
+		// int size = States.size();
+		// undoStack check = States.peek();
 		if (States.size() >= 1) {
-			undoStack preState = States.pop();
+			undoStack preState = new undoStack();
+			preState = States.pop();
 			int prePoint = preState.getPoints();
 			Tile prePlayerTile = preState.getPlayerLocation();
 			List<Tile> ghostTile = new ArrayList<Tile>();
@@ -26,18 +36,18 @@ public class UndoableGame extends Game {
 				ghostTile.add(ghost);
 			}
 
-			Player player = this.getPlayer();
-			if (player.getPoints() > prePoint) {
+			// int a = cur_point;
+			if (game.getPlayer().getPoints() > prePoint) {
 				Food food = new Food();
 				food.occupy(player.getTile());
-				this.getPointManager().consumePointsOnBoard(player,
-				        player.getPoints() - prePoint);
+				game.getPointManager().consumePointsOnBoard(player,
+				        prePoint - game.getPlayer().getPoints());
 			}
 
 			player.deoccupy();
 			player.occupy(prePlayerTile);
 
-			for (Ghost ghost : this.getGhosts()) {
+			for (Ghost ghost : game.getGhosts()) {
 				ghost.deoccupy();
 				ghost.occupy(ghostTile.remove(0));
 
@@ -45,23 +55,28 @@ public class UndoableGame extends Game {
 			if (!player.isAlive()) {
 				player.resurrect();
 			}
+
+			notifyViewers();
 		}
 	}
 
 	@Override
 	public void moveGhost(Ghost theGhost, Direction dir) {
-		// push stack
 		super.moveGhost(theGhost, dir);
-		notifyViewers();
 	}
 
 	@Override
 	public void movePlayer(Direction dir) {
+
+		// push stack
 		undoStack currentState = new undoStack();
 		currentState.pushStack(this);
 		States.push(currentState);
+		int size = States.size();
 		super.movePlayer(dir);
-		notifyViewers();
+		player = this.getPlayer();
+		game = this;
+
 	}
 
 }

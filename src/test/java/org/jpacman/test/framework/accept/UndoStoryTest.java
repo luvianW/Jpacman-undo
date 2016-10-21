@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.jpacman.framework.model.Tile;
 import org.jpacman.framework.ui.MainUI;
 import org.jpacman.undo.UndoablePacman;
+import org.jpacman.undo.undoPacInteraction;
 import org.junit.Test;
 
 public class UndoStoryTest extends MovePlayerStoryTest {
@@ -13,14 +14,19 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 	UndoablePacman newUndoPac;
 
 	@Override
+	protected undoPacInteraction getEngine() {
+		return (undoPacInteraction) super.getEngine();
+	}
+
+	@Override
 	public MainUI makeUI() {
 		newUndoPac = new UndoablePacman();
-		return newUndoPac;
+		return this.newUndoPac;
 	}
 
 	@Override
 	public MainUI getUI() {
-		return newUndoPac;
+		return this.newUndoPac;
 
 	}
 
