@@ -1,24 +1,21 @@
 package org.jpacman.test.framework.accept;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jpacman.framework.model.Player;
+import org.jpacman.framework.factory.FactoryException;
+import org.jpacman.framework.model.Direction;
 import org.jpacman.framework.model.Tile;
 import org.jpacman.framework.ui.MainUI;
 import org.jpacman.undo.UndoablePacman;
+import org.jpacman.undo.undoPacInteraction;
 import org.junit.Test;
 
-public class UndoStoryTest extends MovePlayerStoryTest {
+public class UndoStoryTest extends AbstractAcceptanceTest {
 
 	UndoablePacman newUndoPac;
-
-	public Player p = new Player();
-
-	// @Override
-	// protected undoPacInteraction getEngine() {
-	// return (undoPacInteraction) super.getEngine();
-	// }
+	// undoPacInteraction engine = new undoPacInteraction();
 
 	@Override
 	public MainUI makeUI() {
@@ -35,7 +32,7 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 	// pacman just move a empty cell
 	// return to the previous cell.
 	@Test
-	public void undo_scenarios_71_tests() {
+	public void undo_scenarios_71_tests() throws FactoryException {
 
 		// given
 		getEngine().start();
@@ -44,13 +41,16 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 		assertEquals(playerTile, getPlayer().getTile());
 		// and
 
-		Tile pre_tile = p.getTile();
+		Tile pre_tile = getPlayer().getTile();
 		getEngine().up();
 
 		// when
-		newUndoPac.undo();
+		// if (getEngine() instanceof undoPacInteraction) {
+		// ((undoPacInteraction) getEngine()).undo();
+		// }
+		((undoPacInteraction) getEngine()).undo();
 
-		assertEquals(p.getTile(), pre_tile);
+		assertEquals(getPlayer().getTile(), pre_tile);
 
 	}
 
@@ -62,7 +62,7 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 
 		// given
 
-		Tile playerTile = tileAt(1, 1);
+		// Tile playerTile = tileAt(1, 1);
 		// Tile aTile = tileAt(0, 0);
 		// Tile bTile = tileAt(1, 1);
 		// assertEquals(aTile, bTile);
@@ -71,18 +71,17 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 
 		getEngine().start();
 
-		Tile pre_tile = p.getTile();
-		int pre_points = p.getPoints();
+		Tile pre_tile = getPlayer().getTile();
+		int pre_points = getPlayer().getPoints();
 
 		// and
 		getEngine().left();
-		Tile left_tile = tileAt(0, 1);
+		// Tile left_tile = tileAt(0, 1);
 
 		// when
-		newUndoPac.undo();
-
-		assertEquals(p.getTile(), pre_tile);
-		assertEquals(p.getPoints(), pre_points);
+		((undoPacInteraction) getEngine()).undo();
+		assertEquals(getPlayer().getTile(), pre_tile);
+		assertEquals(getPlayer().getPoints(), pre_points);
 
 	}
 
@@ -93,22 +92,23 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 
 		// given
 
-		Tile playerTile = tileAt(1, 1);
+		// Tile playerTile = tileAt(1, 1);
 		// assertEquals(playerTile, getPlayer().getTile());
 
 		getEngine().start();
 
-		Tile pre_tile = p.getTile();
+		Tile pre_tile = getPlayer().getTile();
 		Tile pre_ghost = theGhost().getTile();
 
 		// and
 		getEngine().right();
+		assertFalse(getPlayer().isAlive());
 
 		// when
-		newUndoPac.undo();
+		((undoPacInteraction) getEngine()).undo();
 
-		assertTrue(p.isAlive());
-		assertEquals(p.getTile(), pre_tile);
+		assertTrue(getPlayer().isAlive());
+		assertEquals(getPlayer().getTile(), pre_tile);
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}
 
@@ -121,11 +121,11 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 		getEngine().start();
 
 		// and
-		getEngine().up();
 		Tile pre_tile = getPlayer().getTile();
+		getEngine().up();
 
 		// when
-		newUndoPac.undo();
+		((undoPacInteraction) getEngine()).undo();
 
 		assertEquals(getPlayer().getTile(), pre_tile);
 
@@ -140,10 +140,14 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 		getEngine().start();
 
 		Tile pre_ghost = theGhost().getTile();
+		Tile pre_player = getPlayer().getTile();
 		// and
 		getEngine().up();
+		// getUI().getGame().movePlayer(Direction.UP);
+		getUI().getGame().moveGhost(theGhost(), Direction.DOWN);
 		// when
-		newUndoPac.undo();
+		((undoPacInteraction) getEngine()).undo();
+		assertEquals(getPlayer().getTile(), pre_player);
 
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}
@@ -159,8 +163,9 @@ public class UndoStoryTest extends MovePlayerStoryTest {
 		Tile pre_ghost = theGhost().getTile();
 		// and
 		getEngine().up();
+		getUI().getGame().moveGhost(theGhost(), Direction.DOWN);
 		// when
-		newUndoPac.undo();
+		((undoPacInteraction) getEngine()).undo();
 
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}

@@ -18,12 +18,13 @@ public class UndoablePacman extends MainUI {
 	public UndoablePacman() {
 		super();
 		level = new Level();
-	}
-
-	public void undo() {
 		this.withFactory(fact);
 
 		this.withModelInteractor(undoPI);
+
+	}
+
+	public void undo() {
 
 		UndoableButtonPanel.withInteractor(undoPI);
 		this.withButtonPanel(UndoableButtonPanel);
