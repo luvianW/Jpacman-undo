@@ -15,20 +15,22 @@ public class UndoablePacman extends MainUI {
 	private UndoButton UndoableButtonPanel = new UndoButton();
 	private DefaultUndoableGF fact = new DefaultUndoableGF();
 
+	/**
+	 * Create a new UndoGame UI for the default board. set the interact and factory with the model.
+	 */
 	public UndoablePacman() {
 		super();
 		level = new Level();
 		this.withFactory(fact);
-
 		this.withModelInteractor(undoPI);
-
 	}
 
+	/**
+	 * set the interact with the undo button, and also set the undo button with the model.
+	 */
 	public void undo() {
-
 		UndoableButtonPanel.withInteractor(undoPI);
 		this.withButtonPanel(UndoableButtonPanel);
-
 	}
 
 	@Override
