@@ -1,16 +1,12 @@
 package org.jpacman.undo;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 
 import org.jpacman.framework.model.Direction;
-import org.jpacman.framework.model.Food;
 import org.jpacman.framework.model.Game;
 import org.jpacman.framework.model.Ghost;
 import org.jpacman.framework.model.Player;
-import org.jpacman.framework.model.Tile;
 
 public class UndoableGame extends Game {
 
@@ -22,6 +18,9 @@ public class UndoableGame extends Game {
 
 	public static UndoableGame game = new UndoableGame();
 
+	/**
+	 * return to the previous stage of the game
+	 */
 	public void undo() {
 
 		// int size = States.size();
@@ -29,29 +28,10 @@ public class UndoableGame extends Game {
 		if (States.size() >= 1) {
 			undoStack preState = new undoStack();
 			preState = States.pop();
-			int prePoint = preState.getPoints();
-			Tile prePlayerTile = preState.getPlayerLocation();
-			List<Tile> ghostTile = new ArrayList<Tile>();
-			for (Tile ghost : preState.getGhostLocation()) {
-				ghostTile.add(ghost);
-			}
+			preState.setBackPoints(game);
+			preState.setBackPlayerTile(game);
+			preState.setBackGhostTile(game);
 
-			// int a = cur_point;
-			if (game.getPlayer().getPoints() > prePoint) {
-				Food food = new Food();
-				food.occupy(player.getTile());
-				game.getPointManager().consumePointsOnBoard(player,
-				        prePoint - game.getPlayer().getPoints());
-			}
-
-			player.deoccupy();
-			player.occupy(prePlayerTile);
-
-			for (Ghost ghost : game.getGhosts()) {
-				ghost.deoccupy();
-				ghost.occupy(ghostTile.remove(0));
-
-			}
 			if (!player.isAlive()) {
 				player.resurrect();
 			}
@@ -70,7 +50,7 @@ public class UndoableGame extends Game {
 
 		// push stack
 		undoStack currentState = new undoStack();
-		currentState.pushStack(this);
+		currentState.store(this);
 		States.push(currentState);
 		int size = States.size();
 		super.movePlayer(dir);

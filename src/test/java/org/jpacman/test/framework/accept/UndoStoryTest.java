@@ -138,17 +138,15 @@ public class UndoStoryTest extends AbstractAcceptanceTest {
 
 		// given
 		getEngine().start();
-
 		Tile pre_ghost = theGhost().getTile();
 		Tile pre_player = getPlayer().getTile();
 		// and
 		getEngine().up();
-		// getUI().getGame().movePlayer(Direction.UP);
 		getUI().getGame().moveGhost(theGhost(), Direction.DOWN);
 		// when
 		((undoPacInteraction) getEngine()).undo();
-		assertEquals(getPlayer().getTile(), pre_player);
 
+		assertEquals(getPlayer().getTile(), pre_player);
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}
 

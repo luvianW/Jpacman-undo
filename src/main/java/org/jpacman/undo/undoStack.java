@@ -3,7 +3,10 @@ package org.jpacman.undo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jpacman.framework.model.Food;
+import org.jpacman.framework.model.Game;
 import org.jpacman.framework.model.Ghost;
+import org.jpacman.framework.model.Player;
 import org.jpacman.framework.model.Tile;
 
 class undoStack {
@@ -12,12 +15,19 @@ class undoStack {
 	int points;
 	private List<Tile> ghostTile = new ArrayList<Tile>();
 
+	/**
+	 * Create a new undoStack node
+	 */
 	public undoStack() {
 		playerTile = null;
 		points = 0;
 	}
 
-	public void pushStack(UndoableGame Game) {
+	/**
+	 * Store some variables(location, points) of the current game
+	 * @param Game
+	 */
+	public void store(UndoableGame Game) {
 		points = Game.getPlayer().getPoints();
 		playerTile = Game.getPlayer().getTile();
 		for (Ghost ghost : Game.getGhosts()) {
@@ -26,17 +36,36 @@ class undoStack {
 
 	}
 
-	public Tile getPlayerLocation() {
-		return playerTile;
+	/**
+	 * set the player tile back to the previous stage
+	 * @param game
+	 */
+	public void setBackPlayerTile(Game game) {
+		game.getPlayer().deoccupy();
+		game.getPlayer().occupy(playerTile);
 	}
 
-	public List<Tile> getGhostLocation() {
-		List<Tile> result = new ArrayList<Tile>();
-		result.addAll(ghostTile);
-		return result;
+	/**
+	 * set the points back
+	 * @param game
+	 */
+	public void setBackPoints(Game game) {
+		Player thePlayer = game.getPlayer();
+		if (thePlayer.getPoints() > points) {
+			Food food = new Food();
+			food.occupy(thePlayer.getTile());
+			game.getPointManager().consumePointsOnBoard(thePlayer,
+			        points - thePlayer.getPoints());
+		}
 	}
-
-	public int getPoints() {
-		return points;
+/**
+ * set the ghost tile back
+ * @param game
+ */
+	public void setBackGhostTile(Game game) {
+		for (Ghost ghost : game.getGhosts()) {
+			ghost.deoccupy();
+			ghost.occupy(ghostTile.remove(0));
+		}
 	}
 }
