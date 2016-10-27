@@ -33,6 +33,10 @@ public class UndoablePacman extends MainUI {
 		this.withButtonPanel(UndoableButtonPanel);
 	}
 
+	public UndoButton getUndoButton() {
+		return UndoableButtonPanel;
+	}
+
 	@Override
 	public void main() throws FactoryException {
 		this.undo();

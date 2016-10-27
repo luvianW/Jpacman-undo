@@ -79,7 +79,9 @@ public class UndoStoryTest extends AbstractAcceptanceTest {
 		// Tile left_tile = tileAt(0, 1);
 
 		// when
-		((undoPacInteraction) getEngine()).undo();
+		newUndoPac.undo();
+		newUndoPac.getUndoButton().initialize();
+		newUndoPac.getUndoButton().getPacmanInteractor().undo();
 		assertEquals(getPlayer().getTile(), pre_tile);
 		assertEquals(getPlayer().getPoints(), pre_points);
 
@@ -163,7 +165,10 @@ public class UndoStoryTest extends AbstractAcceptanceTest {
 		getEngine().up();
 		getUI().getGame().moveGhost(theGhost(), Direction.DOWN);
 		// when
-		((undoPacInteraction) getEngine()).undo();
+		newUndoPac.undo();
+		newUndoPac.getUndoButton().initialize();
+		newUndoPac.getUndoButton().getPacmanInteractor().undo();
+		// ((undoPacInteraction) getEngine()).undo();
 
 		assertEquals(theGhost().getTile(), pre_ghost);
 	}
